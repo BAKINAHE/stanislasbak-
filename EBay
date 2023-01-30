@@ -1,0 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
+def crawl_keywords_on_ebay(keyword):
+    url = "https://www.ebay.com/sch/i.html?_nkw=" + keyword
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+    keywords = []
+    for a in soup.find_all("a", class_="x-refine__menu__value"):
+        keywords.append(a.text)
+    return keywords
+
+print(crawl_keywords_on_ebay("iphone"))
